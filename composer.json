@@ -1,0 +1,5 @@
+{
+    "require": {
+	"gidkom/php-openfire-restapi": "dev-master"
+    }
+}
