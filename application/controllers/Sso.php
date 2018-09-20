@@ -36,6 +36,11 @@ class Sso extends CI_Controller {
     public function AD_user($staff_id=null)
     {
         echo "get user(s) $staff_id from AD";
+
+        $this->load->model('activeDirectory_model','ad_model');
+        $items = $this->ad_model->get_item($staff_id);
+
+        printr_pre($items);
     }
     //leech data from ldap and put in database.
     public function leech()
