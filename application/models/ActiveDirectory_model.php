@@ -20,7 +20,6 @@ class ActiveDirectory_model extends CI_Model {
         $this->options = $this->config->item('ldap_default');
         $this->baseDn = $this->options['baseDn'];
         $this->ldap = new Zend\Ldap\Ldap($this->options);
-	    $this->load->database();
     }
 
     /**
@@ -108,10 +107,6 @@ class ActiveDirectory_model extends CI_Model {
                 $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
                 $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail,'department' => $department, 'telephonenumber' => $telephonenumber,'mobile' => $mobile, 'exten' => $exten,'camp' => $camp,'useraccountcontrol' => $useraccountcontrol,'whencreated' => $create, 'whenchanged' => $change);
-
-
-
-
 
 
         return $item;

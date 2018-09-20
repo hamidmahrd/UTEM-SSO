@@ -33,20 +33,18 @@ class Utem_sso extends CI_Controller {
         }
     }
 
-    public function AD_users()
+    public function AD_user($staff_id)
     {
         $this->load->model('ActiveDirectory_model','AD');
-        $all_users = $this->AD->get_all();
-        $counter=0;
-        foreach($all_users as $user)
-        {$counter++;
+        $user = $this->AD->get_user($staff_id);
+
+
             $name=$user['displayname'];
             $staff_id=$user['samaccountname'];
-            $this->cli->out("[green_bold]- $counter) ");
             $this->cli->out("[green_bold]- $staff_id---");
             $this->cli->out("[white_bold]- $name")->new_line();
-        }
-        $this->cli->out("Total Users : $counter")->new_line();
+
+            printr_pre($user);
     }
 
 }
