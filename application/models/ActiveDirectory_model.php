@@ -241,7 +241,7 @@ class ActiveDirectory_model extends CI_Model {
 
         if(strlen($phoneNumber) == 0)
         {
-            return "bad-number";
+            return "";
         }
         else {
             $phoneNumber = '0' . $phoneNumber;
