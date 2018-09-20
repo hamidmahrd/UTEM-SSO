@@ -54,7 +54,7 @@ class Utem_sso extends CI_Controller {
         $this->load->helper('date');
 
 //header for Exten csv file.
-        $frpbx_extens_header  = "extension,password,name,voicemail,ringtimer,";
+        $frpbx_extens_header = "extension,password,name,voicemail,ringtimer,";
         $frpbx_extens_header .= "mohclass,id,tech,dial,devicetype,";
         $frpbx_extens_header .= "user,description,cid_masquerade,concurrency_limit,account,";
         $frpbx_extens_header .= "accountcode,allow,callerid,context,disallow,";
@@ -77,8 +77,7 @@ class Utem_sso extends CI_Controller {
         $frpbx_dids_city_string = $frpbx_dids_header;
 
 
-
-        $this->load->model('ActiveDirectory_model','AD');
+        $this->load->model('ActiveDirectory_model', 'AD');
         $user = $this->AD->get_user($staff_id);
 
         //set variables
@@ -88,18 +87,18 @@ class Utem_sso extends CI_Controller {
         $name = $user['displayname'];
         $discription = $user['displayname'];
         $voicemail_email = $user['mail'];
-        $account= $user['samaccountname'];
+        $account = $user['samaccountname'];
         $mobile = $user['mobile'];
         $department = $user['department'];
         $secret = "ss$exten-$exten";
-        $trunk_prefix = substr($exten,0,1);
+        $trunk_prefix = substr($exten, 0, 1);
         $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
         $followme_post_dest = "ext-local,$exten,dest";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
 
 
         //check camp
-        switch($camp) {
+        switch ($camp) {
             case 'main':
                 $frpbx_extens_main_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
                 $frpbx_extens_main_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name,from-internal,all,6,$secret,";
@@ -113,7 +112,6 @@ class Utem_sso extends CI_Controller {
                 $frpbx_extens_tech_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,$followme_list,$followme_post_dest,Ring,";
                 $frpbx_extens_tech_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes";
                 $frpbx_dids_tech_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
-                printr_pre($frpbx_dids_tech_string);
                 break;
             case 'city':
                 $frpbx_extens_city_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
@@ -126,54 +124,47 @@ class Utem_sso extends CI_Controller {
                 echo "unknown camp";
                 return;
                 break;
-
-
-                $m_date = mdate('%Y%m%d%h%i%a');
-                $frpbx_extens_main_file = '/var/www/html/utem-sso/tmp/frpbx_exten_main_' . $m_date . '.csv';
-                $frpbx_dids_main_file = '/var/www/html/utem-sso/tmp/frpbx_did_main_' . $m_date . '.csv';
-
-                $frpbx_extens_tech_file = '/var/www/html/utem-sso/tmp/frpbx_exten_tech_' . $m_date . '.csv';
-                $frpbx_dids_tech_file = '/var/www/html/utem-sso/tmp/frpbx_did_tech_' . $m_date . '.csv';
-
-                $frpbx_extens_city_file = '/var/www/html/utem-sso/tmp/frpbx_exten_city_' . $m_date . '.csv';
-                $frpbx_dids_city_file = '/var/www/html/utem-sso/tmp/frpbx_did_city_' . $m_date . '.csv';
-
-                printr_pre($frpbx_extens_tech_file);
-                printr_pre($frpbx_dids_tech_file);
-
-                if ( ! write_file($frpbx_extens_main_file,$frpbx_extens_main_string)){
-                    echo "error writing file frpbx_exten_file in $frpbx_extens_main_file";
-                    exit();
-                }
-                if ( ! write_file($frpbx_dids_main_file,$frpbx_dids_main_string)){
-                    echo "error writing file frpbx_did_file in $frpbx_dids_main_file";
-                    exit();
-                }
-                if ( ! write_file($frpbx_extens_tech_file,$frpbx_extens_tech_string)){
-                    echo "error writing file frpbx_exten_file in $frpbx_extens_tech_file";
-                    exit();
-                }
-                if ( ! write_file($frpbx_dids_tech_file,$frpbx_dids_tech_string)){
-                    echo "error writing file frpbx_did_file in $frpbx_dids_tech_file";
-                    exit();
-                }
-                if ( ! write_file($frpbx_extens_city_file,$frpbx_extens_city_string)){
-                    echo "error writing file frpbx_exten_file in $frpbx_extens_city_file";
-                    exit();
-                }
-                if ( ! write_file($frpbx_dids_city_file,$frpbx_dids_city_string)){
-                    echo "error writing file frpbx_did_file in $frpbx_dids_city_file";
-                    exit();
-                }
-
-                $res1 = array();
-                $res2 = array();
-
-                echo "freepbx main and did files path";
-                echo "/var/www/html/utem-sso/$frpbx_extens_main_file\n";
-                echo "/var/www/html/utem-sso/$frpbx_dids_main_file\n";
-
         }
+
+        $m_date = mdate('%Y%m%d%h%i%a');
+        $frpbx_extens_main_file = '/var/www/html/utem-sso/tmp/frpbx_exten_main_' . $m_date . '.csv';
+        $frpbx_dids_main_file = '/var/www/html/utem-sso/tmp/frpbx_did_main_' . $m_date . '.csv';
+
+        $frpbx_extens_tech_file = '/var/www/html/utem-sso/tmp/frpbx_exten_tech_' . $m_date . '.csv';
+        $frpbx_dids_tech_file = '/var/www/html/utem-sso/tmp/frpbx_did_tech_' . $m_date . '.csv';
+
+        $frpbx_extens_city_file = '/var/www/html/utem-sso/tmp/frpbx_exten_city_' . $m_date . '.csv';
+        $frpbx_dids_city_file = '/var/www/html/utem-sso/tmp/frpbx_did_city_' . $m_date . '.csv';
+
+
+        if (!write_file($frpbx_extens_main_file, $frpbx_extens_main_string)) {
+            echo "error writing file frpbx_exten_file in $frpbx_extens_main_file";
+            exit();
+        }
+        if (!write_file($frpbx_dids_main_file, $frpbx_dids_main_string)) {
+            echo "error writing file frpbx_did_file in $frpbx_dids_main_file";
+            exit();
+        }
+        if (!write_file($frpbx_extens_tech_file, $frpbx_extens_tech_string)) {
+            echo "error writing file frpbx_exten_file in $frpbx_extens_tech_file";
+            exit();
+        }
+        if (!write_file($frpbx_dids_tech_file, $frpbx_dids_tech_string)) {
+            echo "error writing file frpbx_did_file in $frpbx_dids_tech_file";
+            exit();
+        }
+        if (!write_file($frpbx_extens_city_file, $frpbx_extens_city_string)) {
+            echo "error writing file frpbx_exten_file in $frpbx_extens_city_file";
+            exit();
+        }
+        if (!write_file($frpbx_dids_city_file, $frpbx_dids_city_string)) {
+            echo "error writing file frpbx_did_file in $frpbx_dids_city_file";
+            exit();
+        }
+
+        echo "freepbx main and did files path";
+        echo "$frpbx_extens_main_file\n";
+        echo "$frpbx_dids_main_file\n";
 
     }
 
