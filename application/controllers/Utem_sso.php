@@ -33,7 +33,7 @@ class Utem_sso extends CI_Controller {
         }
     }
 
-    public function show_all_ad_users()
+    public function AD_users()
     {
         $this->load->model('ActiveDirectory_model','AD');
         $all_users = $this->AD->get_all();
