@@ -79,34 +79,38 @@ class ActiveDirectory_model extends CI_Model {
     {
         $resource = $this->ldap->connect()->getResource();
         $this->ldap->bind();
-        $search_filter = "(sAMAccountName=$staff_id)";
+        $search_filter = "(sAMAccountName=$staff_id)";;
 
-            $is_there = $this->ldap->exists('');
-            $result = ldap_search($resource, $this->baseDn,$search_filter, array(), 0, 100, 0);
+        $result = ldap_search($resource, $this->baseDn, $search_filter, array(), 0, 100, 0);
+        $items = ldap_get_entries($resource, $result);
 
+        if (empty($items[0])) {
+            echo "empty";
+            return;
+        }
+        $item = $items[0];
+        if (empty($item['samaccounttype'])) {
+            return;
+        }
+        if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
+            return;
+        }
 
-                if (empty($item['samaccounttype'])) {
-                    return;
-                }
-                if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
-                    return;
-                }
+        $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
+        $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
+        $givenname = isset($item['givenname'][0]) ? $item['givenname'][0] : "";
+        $displayname = isset($item['displayname'][0]) ? $item['displayname'][0] : "";
+        $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
+        $department = isset($item['department'][0]) ? $item['department'][0] : "";
+        $telephonenumber = isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]) : "";
+        $mobile = isset($item['mobile'][0]) ? $item['mobile'][0] : "";
+        $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]) : "";
+        $camp = isset($exten) ? $this->getCamp($exten) : "";
+        $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
+        $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
+        $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
-                $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
-                $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
-                $givenname = isset($item['givenname'][0]) ? $item['givenname'][0] : "";
-                $displayname = isset($item['displayname'][0]) ? $item['displayname'][0] : "";
-                $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
-                $department = isset($item['department'][0]) ? $item['department'][0] : "";
-                $telephonenumber =  isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]):"";
-                $mobile = isset($item['mobile'][0]) ? $item['mobile'][0] : "";
-                $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]):"";
-                $camp = isset($exten) ? $this->getCamp($exten):"";
-                $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
-                $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
-                $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
-
-                $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail,'department' => $department, 'telephonenumber' => $telephonenumber,'mobile' => $mobile, 'exten' => $exten,'camp' => $camp,'useraccountcontrol' => $useraccountcontrol,'whencreated' => $create, 'whenchanged' => $change);
+        $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
 
 
         return $item;
