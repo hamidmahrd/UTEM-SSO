@@ -154,7 +154,7 @@ class ActiveDirectory_model extends CI_Model {
         $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
         $department = isset($item['department'][0]) ? $item['department'][0] : "";
         $telephonenumber = isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]) : "";
-        $mobile = isset($item['mobile'][0]) ? $item['mobile'][0] : "";
+        $mobile = isset($item['mobile'][0]) ? $this->check_mobile($item['mobile'][0]) : "";
         $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]) : "";
         $camp = isset($exten) ? $this->getCamp($exten) : "";
         $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
@@ -230,6 +230,21 @@ class ActiveDirectory_model extends CI_Model {
         elseif($nextThree !='270')
         {$phoneNumber .= '-DID_Prefix';}
 
+        return $phoneNumber;
+    }
+
+    public function check_mobile($mobile_number)
+    {
+        $phoneNumber = preg_replace('/[^0-9]/','',$mobile_number);
+        $phoneNumber = ltrim($phoneNumber, '0');
+
+        if(strlen($phoneNumber) == 9)
+        {
+            $phoneNumber = '0' . $phoneNumber;
+        }
+        else {
+            $phoneNumber .= 'not-verified-';
+        }
         return $phoneNumber;
     }
 
