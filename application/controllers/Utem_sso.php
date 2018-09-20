@@ -73,7 +73,8 @@ class Utem_sso extends CI_Controller {
         $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
         $followme_post_dest = "\"ext-local,$exten,dest\"";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
-
+        printr_pre($user);
+        
 //header for Exten csv file.
         $frpbx_exten_header =  "extension,password,name,voicemail,ringtimer,";
         $frpbx_exten_header .= "mohclass,id,tech,dial,devicetype,";
