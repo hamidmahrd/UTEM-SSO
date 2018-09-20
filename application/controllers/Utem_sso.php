@@ -105,27 +105,22 @@ class Utem_sso extends CI_Controller {
                 $frpbx_extens_main_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name,from-internal,all,6,$secret,";
                 $frpbx_extens_main_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,$followme_list,$followme_post_dest,Ring,";
                 $frpbx_extens_main_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes";
-
                 $frpbx_dids_main_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
-
                 break;
             case 'tech':
                 $frpbx_extens_tech_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
                 $frpbx_extens_tech_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name,from-internal,all,6,$secret,";
                 $frpbx_extens_tech_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,$followme_list,$followme_post_dest,Ring,";
                 $frpbx_extens_tech_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes";
-
                 $frpbx_dids_tech_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
-
+                printr_pre($frpbx_dids_tech_string);
                 break;
             case 'city':
                 $frpbx_extens_city_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
                 $frpbx_extens_city_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name,from-internal,all,6,$secret,";
                 $frpbx_extens_city_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,$followme_list,$followme_post_dest,Ring,";
                 $frpbx_extens_city_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes";
-
                 $frpbx_dids_city_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
-
                 break;
             default:
                 echo "unknown camp";
