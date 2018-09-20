@@ -74,14 +74,14 @@ class Utem_sso extends CI_Controller {
         $followme_post_dest = "\"ext-local,$exten,dest\"";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
         printr_pre($user);
-        
+
 //header for Exten csv file.
         $frpbx_exten_header =  "extension,password,name,voicemail,ringtimer,";
         $frpbx_exten_header .= "mohclass,id,tech,dial,devicetype,";
         $frpbx_exten_header .= "user,description,cid_masquerade,concurrency_limit,account,";
         $frpbx_exten_header .= "accountcode,allow,callerid,context,disallow,";
         $frpbx_exten_header .= "max_contacts,secret,sipdriver,callwaiting_enable,findmefollow_strategy,";
-        $frpbx_exten_header .= "findmefollow_grptime,findmefollow_grplist,findmefollow_postdest,findmefollow_ringing,findmefollow_pre_ring,";
+        $frpbx_exten_header .= "findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_postdest,findmefollow_dring,findmefollow_ringing,findmefollow_pre_ring,";
         $frpbx_exten_header .= "findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,";
         $frpbx_exten_header .= "voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail\n";
 //header for DID csv file.
@@ -93,7 +93,7 @@ class Utem_sso extends CI_Controller {
 
         $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
         $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
-        $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,$followme_list,$followme_post_dest,Ring,";
+        $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,Ring,";
         $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes";
 
         $frpbx_did_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
