@@ -75,7 +75,7 @@ class ActiveDirectory_model extends CI_Model {
         return $ldap_users->getArrayCopy();
     }
 
-    public function get_item($staff_id)
+    public function get_user($staff_id)
     {
         $resource = $this->ldap->connect()->getResource();
         $this->ldap->bind();
