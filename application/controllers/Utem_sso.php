@@ -42,7 +42,7 @@ class Utem_sso extends CI_Controller {
             $name=$user['displayname'];
             $staff_id=$user['samaccountname'];
             $this->cli->out("[green_bold]- $staff_id---[reset]\n");
-            $this->cli->out("[white_bold]- $name")->new_line();
+            $this->cli->out("[white_bold]- $name [reset]")->new_line();
 
             printr_pre($user);
     }
