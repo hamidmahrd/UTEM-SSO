@@ -83,7 +83,7 @@ class ActiveDirectory_model extends CI_Model {
 
         $result = ldap_search($resource, $this->baseDn, $search_filter, array(), 0, 100, 0);
         $items = ldap_get_entries($resource, $result);
-
+//hamid
         if (empty($items[0])) {
             echo "empty";
             return;
