@@ -80,9 +80,10 @@ class ActiveDirectory_model extends CI_Model {
     {
         $resource = $this->ldap->connect()->getResource();
         $this->ldap->bind();
+        $search_filter = "(sAMAccountName=$staff_id)";
 
             $is_there = $this->ldap->exists('');
-            //$item = $this->ldap->
+            $result = ldap_search($resource, $this->baseDn,$search_filter, array(), 0, 100, 0);
 
 
                 if (empty($item['samaccounttype'])) {
@@ -99,13 +100,14 @@ class ActiveDirectory_model extends CI_Model {
                 $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
                 $department = isset($item['department'][0]) ? $item['department'][0] : "";
                 $telephonenumber =  isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]):"";
+                $mobile = isset($item['mobile'][0]) ? $item['mobile'][0] : "";
                 $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]):"";
                 $camp = isset($exten) ? $this->getCamp($exten):"";
                 $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
                 $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
                 $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
-                $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail,'department' => $department, 'telephonenumber' => $telephonenumber, 'exten' => $exten,'camp' => $camp,'useraccountcontrol' => $useraccountcontrol,'whencreated' => $create, 'whenchanged' => $change);
+                $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail,'department' => $department, 'telephonenumber' => $telephonenumber,'mobile' => $mobile, 'exten' => $exten,'camp' => $camp,'useraccountcontrol' => $useraccountcontrol,'whencreated' => $create, 'whenchanged' => $change);
 
 
 
