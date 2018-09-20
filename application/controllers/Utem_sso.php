@@ -47,6 +47,14 @@ class Utem_sso extends CI_Controller {
             printr_pre($user);
     }
 
+    public function AD_camp_users($camp='main')
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $users = $this->AD->get_camp_users($camp);
+        $this->cli->out("[green_bold]-users in $camp : [reset]\n");
+        printr_pre($users);
+    }
+
     public function freepbx_add_user($staff_id)
     {
         $this->load->helper('string');
