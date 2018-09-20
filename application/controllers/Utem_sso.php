@@ -107,6 +107,8 @@ class Utem_sso extends CI_Controller {
         $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
         $followme_post_dest = "ext-local,$exten,dest";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
+
+        printr_exit($user);
         //check camp
         switch($camp) {
             case 'main':
