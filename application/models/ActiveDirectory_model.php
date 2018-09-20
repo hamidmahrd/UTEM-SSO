@@ -110,10 +110,10 @@ class ActiveDirectory_model extends CI_Model {
         $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
         $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
-        $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
+        $ldap_users = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
 
 
-        return $item;
+        return $ldap_users;
     }
 
 
