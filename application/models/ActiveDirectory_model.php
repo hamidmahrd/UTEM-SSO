@@ -243,7 +243,7 @@ class ActiveDirectory_model extends CI_Model {
             $phoneNumber = '0' . $phoneNumber;
         }
         else {
-            $phoneNumber .= 'not-verified-';
+            $phoneNumber = 'not-verified-' . $phoneNumber;
         }
         return $phoneNumber;
     }
