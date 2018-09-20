@@ -78,12 +78,12 @@ class Utem_sso extends CI_Controller {
         $department = $user['department'];
         $secret = "ss$exten-$exten";
         $trunk_prefix = substr($exten, 0, 1);
-        if(!$mobile=="") {
-            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
+        if($mobile == "" | $mobile == "bad-number") {
+            $followme_list = $exten;
         }
         else
         {
-            $followme_list = $exten;
+            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
         }
         $followme_post_dest = "\"ext-local,$exten,dest\"";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";

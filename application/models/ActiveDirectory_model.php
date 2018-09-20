@@ -238,12 +238,13 @@ class ActiveDirectory_model extends CI_Model {
         $phoneNumber = preg_replace('/[^0-9]/','',$mobile_number);
         $phoneNumber = ltrim($phoneNumber, '0');
 
-        if(strlen($phoneNumber) == 9)
+
+        if(strlen($phoneNumber) == 0)
         {
-            $phoneNumber = '0' . $phoneNumber;
+            return "bad-number";
         }
         else {
-            $phoneNumber = 'not-verified-' . $phoneNumber;
+            $phoneNumber = '0' . $phoneNumber;
         }
         return $phoneNumber;
     }
