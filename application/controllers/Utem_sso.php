@@ -67,17 +67,6 @@ class Utem_sso extends CI_Controller {
         $frpbx_dids_header = "cidnum,extension,destination,description,mohclass\n";
 
 
-        $m_date = mdate('%Y%m%d%h%i%a');
-        $frpbx_extens_main_file = './tmp/frpbx_exten_main_' . $m_date . '.csv';
-        $frpbx_dids_main_file = './tmp/frpbx_did_main_' . $m_date . '.csv';
-
-        $frpbx_extens_tech_file = './tmp/frpbx_exten_tech_' . $m_date . '.csv';
-        $frpbx_dids_tech_file = './tmp/frpbx_did_tech_' . $m_date . '.csv';
-
-        $frpbx_extens_city_file = './tmp/frpbx_exten_city_' . $m_date . '.csv';
-        $frpbx_dids_city_file = './tmp/frpbx_did_city_' . $m_date . '.csv';
-
-
         $frpbx_extens_main_string = $frpbx_extens_header;
         $frpbx_dids_main_string = $frpbx_dids_header;
 
@@ -108,7 +97,7 @@ class Utem_sso extends CI_Controller {
         $followme_post_dest = "ext-local,$exten,dest";
         $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
 
-        printr_exit($user);
+
         //check camp
         switch($camp) {
             case 'main':
@@ -142,6 +131,20 @@ class Utem_sso extends CI_Controller {
                 echo "unknown camp";
                 return;
                 break;
+
+
+                $m_date = mdate('%Y%m%d%h%i%a');
+                $frpbx_extens_main_file = '/var/www/html/utem-sso/tmp/frpbx_exten_main_' . $m_date . '.csv';
+                $frpbx_dids_main_file = '/var/www/html/utem-sso/tmp/frpbx_did_main_' . $m_date . '.csv';
+
+                $frpbx_extens_tech_file = '/var/www/html/utem-sso/tmp/frpbx_exten_tech_' . $m_date . '.csv';
+                $frpbx_dids_tech_file = '/var/www/html/utem-sso/tmp/frpbx_did_tech_' . $m_date . '.csv';
+
+                $frpbx_extens_city_file = '/var/www/html/utem-sso/tmp/frpbx_exten_city_' . $m_date . '.csv';
+                $frpbx_dids_city_file = '/var/www/html/utem-sso/tmp/frpbx_did_city_' . $m_date . '.csv';
+
+                printr_pre($frpbx_extens_tech_file);
+                printr_pre($frpbx_dids_tech_file);
 
                 if ( ! write_file($frpbx_extens_main_file,$frpbx_extens_main_string)){
                     echo "error writing file frpbx_exten_file in $frpbx_extens_main_file";
