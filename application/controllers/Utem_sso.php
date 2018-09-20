@@ -160,7 +160,7 @@ class Utem_sso extends CI_Controller {
         $frpbx_exten_header .= "max_contacts,secret,sipdriver,callwaiting_enable,findmefollow_strategy,";
         $frpbx_exten_header .= "findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_postdest,findmefollow_dring,findmefollow_needsconf,findmefollow_ringing,findmefollow_pre_ring,";
         $frpbx_exten_header .= "findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,";
-        $frpbx_exten_header .= "voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail,vmx_unavail_enabled,vmx_busy_enabled,vmx_temp_enabled\n";
+        $frpbx_exten_header .= "voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail,vmx_unavail_enabled,vmx_busy_enabled,vmx_temp_enabled,vmx_play_instructions,vmx_option_0_number\n";
 //header for DID csv file.
         $frpbx_did_header = "cidnum,extension,destination,description,mohclass\n";
 
@@ -195,7 +195,7 @@ class Utem_sso extends CI_Controller {
             $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
             $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
             $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
-            $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,blocked,blocked,blocked\n";
+            $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,blocked,blocked,blocked,no,,\n";
 
             $frpbx_did_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
         }
