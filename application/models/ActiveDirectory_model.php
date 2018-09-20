@@ -108,7 +108,7 @@ class ActiveDirectory_model extends CI_Model {
                 $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
                 $department = isset($item['department'][0]) ? $item['department'][0] : "";
                 $telephonenumber =  isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]):"";
-                $mobile = isset($item['mobile'][0]) ? $item['mobile'][0] : "";
+                $mobile = isset($item['mobile'][0]) ? $this->check_mobile($item['mobile'][0]) : "";
                 $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]):"";
                 $user_camp = isset($exten) ? $this->getCamp($exten):"";
                 $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
