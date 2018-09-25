@@ -47,6 +47,20 @@ class Utem_sso extends CI_Controller {
             printr_pre($user);
     }
 
+    public function AD_user_full($staff_id)
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $user = $this->AD->get_user_full($staff_id);
+
+
+        $name=$user['displayname'];
+        $staff_id=$user['samaccountname'];
+        $this->cli->out("[green_bold]- $staff_id---[reset]\n");
+        $this->cli->out("[white_bold]- $name [reset]")->new_line();
+
+        printr_pre($user);
+    }
+
     public function AD_camp_users($camp='main')
     {
         $this->load->model('ActiveDirectory_model','AD');
