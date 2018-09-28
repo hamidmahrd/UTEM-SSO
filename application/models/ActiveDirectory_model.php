@@ -52,21 +52,8 @@ class ActiveDirectory_model extends CI_Model {
                     continue;
                 }
 
-                $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
-                $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
-                $givenname = isset($item['givenname'][0]) ? $item['givenname'][0] : "";
-                $displayname = isset($item['displayname'][0]) ? $item['displayname'][0] : "";
-                $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
-                $department = isset($item['department'][0]) ? $item['department'][0] : "";
-                $telephonenumber =  isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]):"";
-                $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]):"";
-                $camp = isset($exten) ? $this->getCamp($exten):"";
-                $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
-                $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
-                $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
-                $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail,'department' => $department, 'telephonenumber' => $telephonenumber, 'exten' => $exten,'camp' => $camp,'useraccountcontrol' => $useraccountcontrol,'whencreated' => $create, 'whenchanged' => $change);
-
+                $ldap_users[] = $this->user_to_array($item);
             }
             ldap_control_paged_result_response($resource, $result, $cookie);
 
@@ -100,23 +87,10 @@ class ActiveDirectory_model extends CI_Model {
                 if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
                     continue;
                 }
+                $user = $this->user_to_array($item);
 
-                $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
-                $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
-                $givenname = isset($item['givenname'][0]) ? $item['givenname'][0] : "";
-                $displayname = isset($item['displayname'][0]) ? $item['displayname'][0] : "";
-                $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
-                $department = isset($item['department'][0]) ? $item['department'][0] : "";
-                $telephonenumber =  isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]):"";
-                $mobile = isset($item['mobile'][0]) ? $this->check_mobile($item['mobile'][0]) : "";
-                $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]):"";
-                $user_camp = isset($exten) ? $this->getCamp($exten):"";
-                $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
-                $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
-                $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
-
-                if($user_camp == $camp) {
-                    $ldap_users[] = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
+                if($user['camp'] == $camp) {
+                    $ldap_users[] = $user;
                 }
             }
             ldap_control_paged_result_response($resource, $result, $cookie);
@@ -147,24 +121,9 @@ class ActiveDirectory_model extends CI_Model {
             return;
         }
 
-        $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
-        $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
-        $givenname = isset($item['givenname'][0]) ? $item['givenname'][0] : "";
-        $displayname = isset($item['displayname'][0]) ? $item['displayname'][0] : "";
-        $mail = isset($item['mail'][0]) ? $item['mail'][0] : "";
-        $department = isset($item['department'][0]) ? $item['department'][0] : "";
-        $telephonenumber = isset($item['ipphone'][0]) ? $this->checkDID($item['ipphone'][0]) : "";
-        $mobile = isset($item['mobile'][0]) ? $this->check_mobile($item['mobile'][0]) : "";
-        $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]) : "";
-        $camp = isset($exten) ? $this->getCamp($exten) : "";
-        $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
-        $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
-        $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
+        $ldap_user = $this->user_to_array($item);
 
-        $ldap_users = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
-
-
-        return $ldap_users;
+        return $ldap_user;
     }
 
     public function get_user_full($staff_id)
