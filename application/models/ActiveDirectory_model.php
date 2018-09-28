@@ -287,10 +287,11 @@ class ActiveDirectory_model extends CI_Model {
         $exten = isset($item['ipphone'][0]) ? $this->getExten($item['ipphone'][0]) : "";
         $user_camp = isset($exten) ? $this->getCamp($exten) : "";
         $useraccountcontrol = isset($item['useraccountcontrol'][0]) ? $item['useraccountcontrol'][0] : "";
+        $description = isset($item['description'][0]) ? $item['description'][0] : "";
         $create = isset($item['whencreated'][0]) ? $item['whencreated'][0] : "";
         $change = isset($item['whenchanged'][0]) ? $item['whenchanged'][0] : "";
 
-        $user = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $user_camp, 'useraccountcontrol' => $useraccountcontrol, 'whencreated' => $create, 'whenchanged' => $change);
+        $user = array('samaccountname' => $samaccountname, 'samaccounttype' => $samaccounttype, 'givenname' => $givenname, 'displayname' => $displayname, 'mail' => $mail, 'department' => $department, 'telephonenumber' => $telephonenumber, 'mobile' => $mobile, 'exten' => $exten, 'camp' => $user_camp, 'useraccountcontrol' => $useraccountcontrol,'description' => $description, 'whencreated' => $create, 'whenchanged' => $change);
 
         return $user;
     }
