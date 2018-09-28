@@ -188,7 +188,7 @@ class ActiveDirectory_model extends CI_Model {
             return;
         }
 
-        printr_pre($items);
+        return $item[0];
 
 
     }
