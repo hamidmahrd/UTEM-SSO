@@ -98,8 +98,15 @@ class ActiveDirectory_model extends CI_Model {
         return $ldap_users->getArrayCopy();
     }
 
-    public function get_all_inactive()
+    public function get_all_inactive_users()
     {
+        $all_users = $this->get_all();
+
+        foreach ($all_users as $user)
+        {
+            
+        }
+        return $all_user_array;
     }
 
     public function get_all_active_users()

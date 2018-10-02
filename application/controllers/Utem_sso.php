@@ -60,6 +60,15 @@ class Utem_sso extends CI_Controller {
 
     }
 
+    public function AD_get_all_inactive()
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $inactive_users = $this->AD->get_all_inactive_users();
+
+        printr_pre($inactive_users);
+
+    }
+
 
     public function AD_user($staff_id)
     {
