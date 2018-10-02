@@ -83,3 +83,24 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+/*
+|--------------------------------------------------------------------------
+| freepbx headers
+|--------------------------------------------------------------------------
+*/
+defined('FRPBX_EXTEN_HEADER')  OR  define('FRPBX_EXTEN_HEADER',"extension,password,name,voicemail,ringtimer,mohclass,id,tech,dial,devicetype,user,description,cid_masquerade,concurrency_limit,account,accountcode,allow,callerid,context,disallow,max_contacts,secret,sipdriver,callwaiting_enable,findmefollow_strategy,findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_postdest,findmefollow_dring,findmefollow_needsconf,findmefollow_ringing,findmefollow_pre_ring,findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail,vmx_unavail_enabled,vmx_busy_enabled,vmx_temp_enabled,vmx_play_instructions,vmx_option_0_number,vmx_option_1_number,vmx_option_2_number\n");
+
+defined('FRPBX_DID_HEADER') OR  define('FRPBX_DID_HEADER',"cidnum,extension,destination,privacyman,alertinfo,ringing,mohclass,description,grppre,delay_answer,pricid,pmmaxretries,pmminlength,reversal,callrecording\n");
+
+
+/*
+|--------------------------------------------------------------------------
+| AD Disabled useraccountcontrol
+|--------------------------------------------------------------------------
+*/
+
+defined('DISABLED_ACCOUNT_CONTROL') OR define('DISABLED_ACCOUNT_CONTROL',serialize (array('514','546','66050','66082','262658','262690','328194','328226')));
+
+defined('CAMPS') OR define('CAMPS',serialize (array('main','tech','city')));

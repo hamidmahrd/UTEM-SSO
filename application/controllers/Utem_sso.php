@@ -33,6 +33,34 @@ class Utem_sso extends CI_Controller {
         }
     }
 
+    public function AD_get_all()
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $users = $this->AD->get_all();
+
+        printr_pre($users);
+
+    }
+
+    public function AD_get_all_by_attr($attr='description')
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $users = $this->AD->get_all_by_attr($attr);
+
+        printr_pre($users);
+
+    }
+
+    public function AD_get_all_active()
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $active_users = $this->AD->get_all_active_users();
+
+        printr_pre($active_users);
+
+    }
+
+
     public function AD_user($staff_id)
     {
         $this->load->model('ActiveDirectory_model','AD');
@@ -64,7 +92,7 @@ class Utem_sso extends CI_Controller {
         printr_pre($users);
     }
 
-    public function freepbx_add_user($staff_id)
+    public function frpbx_add_user($staff_id)
     {
         $this->load->helper('string');
         $this->load->helper('file');
@@ -76,39 +104,12 @@ class Utem_sso extends CI_Controller {
         $user = $this->AD->get_user($staff_id);
 
         //set variables
-        $exten = $user['exten'];
-        $did = $user['telephonenumber'];
-        $camp = $user['camp'];
-        $name = $user['displayname'];
-        $discription = $user['displayname'];
-        $voicemail_email = $user['mail'];
-        $account = $user['samaccountname'];
-        $mobile = $user['mobile'];
-        $department = $user['department'];
-        $secret = "ss$exten-$exten";
-        $trunk_prefix = substr($exten, 0, 1);
-        if($mobile == "" ) {
-            $followme_list = $exten;
-        }
-        else
-        {
-            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
-        }
-        $followme_post_dest = "\"ext-local,$exten,dest\"";
-        $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
-        printr_pre($user);
+
 
 //header for Exten csv file.
-        $frpbx_exten_header =  "extension,password,name,voicemail,ringtimer,";
-        $frpbx_exten_header .= "mohclass,id,tech,dial,devicetype,";
-        $frpbx_exten_header .= "user,description,cid_masquerade,concurrency_limit,account,";
-        $frpbx_exten_header .= "accountcode,allow,callerid,context,disallow,";
-        $frpbx_exten_header .= "max_contacts,secret,sipdriver,callwaiting_enable,findmefollow_strategy,";
-        $frpbx_exten_header .= "findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_postdest,findmefollow_dring,findmefollow_needsconf,findmefollow_ringing,findmefollow_pre_ring,";
-        $frpbx_exten_header .= "findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,";
-        $frpbx_exten_header .= "voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail\n";
+        $frpbx_exten_header =  FRPBX_EXTEN_HEADER;
 //header for DID csv file.
-        $frpbx_did_header = "cidnum,extension,destination,description,mohclass\n";
+        $frpbx_did_header = FRPBX_DID_HEADER;
 
         $frpbx_exten_string = $frpbx_exten_header ;
         $frpbx_did_string = $frpbx_did_header;
@@ -162,52 +163,22 @@ class Utem_sso extends CI_Controller {
         $this->load->helper('date');
 
 //header for Exten csv file.
-        $frpbx_exten_header  = "extension,password,name,voicemail,ringtimer,";
-        $frpbx_exten_header .= "mohclass,id,tech,dial,devicetype,";
-        $frpbx_exten_header .= "user,description,cid_masquerade,concurrency_limit,account,";
-        $frpbx_exten_header .= "accountcode,allow,callerid,context,disallow,";
-        $frpbx_exten_header .= "max_contacts,secret,sipdriver,callwaiting_enable,findmefollow_strategy,";
-        $frpbx_exten_header .= "findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_postdest,findmefollow_dring,findmefollow_needsconf,findmefollow_ringing,findmefollow_pre_ring,";
-        $frpbx_exten_header .= "findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,";
-        $frpbx_exten_header .= "voicemail_email,voicemail_options,voicemail_same_exten,disable_star_voicemail,vmx_unavail_enabled,vmx_busy_enabled,vmx_temp_enabled,vmx_play_instructions,vmx_option_0_number,vmx_option_1_number,vmx_option_2_number\n";
-//header for DID csv file.
-        $frpbx_did_header  = "cidnum,extension,destination,privacyman,alertinfo,ringing,mohclass,";
-        $frpbx_did_header .= "description,grppre,delay_answer,pricid,pmmaxretries,pmminlength,reversal,callrecording\n";
 
-        $frpbx_exten_string = $frpbx_exten_header;
-        $frpbx_did_string = $frpbx_did_header;
+
+        $frpbx_exten_string = FRPBX_EXTEN_HEADER;
+        $frpbx_did_string = FRPBX_DID_HEADER;
 
 
         $this->load->model('ActiveDirectory_model','AD');
         $users = $this->AD->get_camp_users($camp);
         foreach ($users as $user) {
             //set variables
-            $exten = $user['exten'];
-            $did = $user['telephonenumber'];
-            $camp = $user['camp'];
-            $name = $user['displayname'];
-            $discription = $user['displayname'];
-            $voicemail_email = $user['mail'];
-            $account = $user['samaccountname'];
-            $mobile = $user['mobile'];
-            $department = $user['department'];
-            $secret = "ss$exten-$exten";
-            $trunk_prefix = substr($exten, 0, 1);
-            if ($mobile == "") {
-                $followme_list = $exten;
-            } else {
-                $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
-            }
-            $followme_post_dest = "\"ext-local,$exten,dest\"";
-            $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
+
             printr_pre($user);
 
-            $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
-            $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
-            $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
-            $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,blocked,blocked,blocked,no,,,\n";
 
-            $frpbx_did_string .= ",$did,\"from-did-direct,$exten,1\",0,,,default,$discription,,0,,,,,dontcare\n";
+
+
         }
         //check camp
 
@@ -229,6 +200,35 @@ class Utem_sso extends CI_Controller {
         echo "freepbx extensions and dids files path:\n";
         echo "$frpbx_extens_file\n";
         echo "$frpbx_dids_file\n";
+
+    }
+
+
+    private function add_to_frpbx_exten_string(&$frpbx_string,$user)
+    {
+        $exten = $user['exten'];
+        $did = $user['telephonenumber'];
+        $camp = $user['camp'];
+        $name = $user['displayname'];
+        $discription = $user['displayname'];
+        $voicemail_email = $user['mail'];
+        $account = $user['samaccountname'];
+        $mobile = $user['mobile'];
+        $department = $user['department'];
+        $secret = "ss$exten-$exten";
+        $trunk_prefix = substr($exten, 0, 1);
+        if ($mobile == "") {
+            $followme_list = $exten;
+        } else {
+            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
+        }
+        $followme_post_dest = "\"ext-local,$exten,dest\"";
+        $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
+
+        $frpbx_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
+        $frpbx_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
+        $frpbx_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
+        $frpbx_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,blocked,blocked,blocked,no,,,\n";
 
     }
 

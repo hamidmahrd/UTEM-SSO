@@ -52,8 +52,8 @@ class ActiveDirectory_model extends CI_Model {
                     continue;
                 }
 
-
-                $ldap_users[] = $this->user_to_array($item);
+                $user = $this->user_to_array($item);
+                $ldap_users[] = $user;
             }
             ldap_control_paged_result_response($resource, $result, $cookie);
 
@@ -62,7 +62,7 @@ class ActiveDirectory_model extends CI_Model {
         return $ldap_users->getArrayCopy();
     }
 
-    public function get_camp_users($camp)
+    public function get_all_by_attr($keyword)
     {
         $resource = $this->ldap->connect()->getResource();
         $this->ldap->bind();
@@ -87,17 +87,37 @@ class ActiveDirectory_model extends CI_Model {
                 if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
                     continue;
                 }
-                $user = $this->user_to_array($item);
 
-                if($user['camp'] == $camp) {
-                    $ldap_users[] = $user;
-                }
+                $user = $this->user_to_array($item);
+                $ldap_users[$user[$keyword]][] = $user;
             }
             ldap_control_paged_result_response($resource, $result, $cookie);
 
         } while($cookie !== null && $cookie != '');
 
         return $ldap_users->getArrayCopy();
+    }
+
+    public function get_all_inactive()
+    {
+    }
+
+    public function get_all_active_users()
+    {
+
+        $users = $this->get_all_by_attr('description');
+
+        foreach ($users['SEDANG BERKHIDMAT'] as $user)
+        {
+            if (!in_array($user['useraccountcontrol'],unserialize(DISABLED_ACCOUNT_CONTROL)))
+            {
+                if (in_array($user['camp'],unserialize(CAMPS)))
+                {
+                    $active_users[] = $user;
+                }
+            }
+        }
+        return $active_users;
     }
 
     public function get_user($staff_id)
@@ -126,6 +146,10 @@ class ActiveDirectory_model extends CI_Model {
         return $ldap_user;
     }
 
+    /**
+     * Get Active Directory full data for staff_id.
+     *@return array user with full data.
+     */
     public function get_user_full($staff_id)
     {
         $resource = $this->ldap->connect()->getResource();
@@ -151,8 +175,13 @@ class ActiveDirectory_model extends CI_Model {
 
 
     }
-    //check if DID is Valid and Normalize it.
-    public function checkDID($telephone_number)
+
+
+    /**
+     * Check DID for valid utem DID numbers.
+     *@return phonenumber.
+     */
+    private function checkDID($telephone_number)
     {
         $phoneNumber = preg_replace('/[^0-9]/','',$telephone_number);
         $phoneNumber = ltrim($phoneNumber, '0');
@@ -216,7 +245,7 @@ class ActiveDirectory_model extends CI_Model {
         return $phoneNumber;
     }
 
-    public function check_mobile($mobile_number)
+    private function check_mobile($mobile_number)
     {
         $phoneNumber = preg_replace('/[^0-9]/','',$mobile_number);
         $phoneNumber = ltrim($phoneNumber, '0');
@@ -232,7 +261,7 @@ class ActiveDirectory_model extends CI_Model {
         return $phoneNumber;
     }
 
-    public function getExten($telephone_number){
+    private function getExten($telephone_number){
         $phoneNumber = $this->checkDID($telephone_number);
 
         if(is_numeric($phoneNumber))
@@ -243,7 +272,7 @@ class ActiveDirectory_model extends CI_Model {
         return ;
     }
 
-    public function getCamp($exten)
+    private function getCamp($exten)
     {
 
         switch (substr($exten, 0, 1)) {
@@ -269,12 +298,6 @@ class ActiveDirectory_model extends CI_Model {
 
     private function user_to_array($item)
     {
-        if (empty($item['samaccounttype'])) {
-            return null;
-        }
-        if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
-            return null;
-        }
 
         $samaccountname = isset($item['samaccountname'][0]) ? $item['samaccountname'][0] : "[no account name]";
         $samaccounttype = isset($item['samaccounttype'][0]) ? "user" : "[no account type]";
