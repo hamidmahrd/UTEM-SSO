@@ -111,7 +111,7 @@ class ActiveDirectory_model extends CI_Model {
 
         foreach ($all_users as $user) {
             if ($user['mobile'] != '') {
-                $followme_users = $user;
+                $followme_users[] = $user;
             }
         }
 
