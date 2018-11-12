@@ -100,10 +100,13 @@ class Utem_sso extends CI_Controller {
         foreach ($users as $user)
         {
             ++$counter;
-            /*$list [] = array('staffid' => $user['samaccountname'],'displayname' => $user['displayname'],'exten' => $user['exten'],'mobile' => $user['mobile']);*/
-            echo "$counter-$user\[\'samaccountname\'],$user\[\'displayname\'],$user\[\'exten\'],$user\[\'mobile\']\r\n";
+            $name = $user['displayname'];
+            $exten = $user['exten'];
+            $mobile = $user['mobile'];
+
+            echo "$counter) $exten, $name, $mobile \r\n";
         }
-        printr_pre($list);
+
     }
 
     public function AD_user_full($staff_id)
