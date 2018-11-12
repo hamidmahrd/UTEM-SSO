@@ -100,13 +100,22 @@ class ActiveDirectory_model extends CI_Model {
 
     public function get_all_inactive_users()
     {
+
+    }
+
+    public  function get_followme_users()
+    {
         $all_users = $this->get_all();
 
-        foreach ($all_users as $user)
-        {
-            
+        $followme_users = array();
+
+        foreach ($all_users as $user) {
+            if ($user['mobile']) {
+                $followme_users = $user;
+            }
         }
-        return $all_user_array;
+
+        return $followme_users;
     }
 
     public function get_all_active_users()
