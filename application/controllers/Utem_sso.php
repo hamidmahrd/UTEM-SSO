@@ -89,12 +89,16 @@ class Utem_sso extends CI_Controller {
         $this->load->model('ActiveDirectory_model', 'AD');
         $users = $this->AD->get_followme_users();
 
+        usort($users, function ($item1, $item2) {
+            if ($item1['exten'] == $item2['exten']) return 0;
+            return $item1['exten'] < $item2['exten'] ? -1 : 1;
+        });
+
         $list = array();
 
         foreach ($users as $user)
         {
-            $info = $user['exten'] . ',' . $user['mobile'];
-            $list [] = $info;
+            $list [] = array($user['samaccountname'],$user['displayname'],$user['exten'],$user['mobile']);
         }
         printr_pre($list);
     }
