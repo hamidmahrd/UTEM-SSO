@@ -86,10 +86,17 @@ class Utem_sso extends CI_Controller {
 
     public function AD_followme_users()
     {
-        $this->load->model('ActiveDirectory_model','AD');
+        $this->load->model('ActiveDirectory_model', 'AD');
         $users = $this->AD->get_followme_users();
 
-        printr_pre($users);
+        $list = array();
+
+        foreach ($users as $user)
+        {
+            $info = $user['exten'] . ',' . $user['mobile'];
+            $list [] = $info;
+        }
+        printr_pre($list);
     }
 
     public function AD_user_full($staff_id)
