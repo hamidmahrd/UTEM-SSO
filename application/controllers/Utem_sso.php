@@ -98,7 +98,7 @@ class Utem_sso extends CI_Controller {
 
         foreach ($users as $user)
         {
-            $list [] = array($user['samaccountname'],$user['displayname'],$user['exten'],$user['mobile']);
+            $list [] = array('staffid' => $user['samaccountname'],'displayname' => $user['displayname'],'exten' => $user['exten'],'mobile' => $user['mobile']);
         }
         printr_pre($list);
     }
