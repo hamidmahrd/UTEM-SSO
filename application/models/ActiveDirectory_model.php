@@ -108,7 +108,7 @@ class ActiveDirectory_model extends CI_Model {
         $all_users = $this->get_all();
 
         $followme_users = array();
-
+printr_exit($all_users);
         foreach ($all_users as $user) {
             if ($user['mobile']) {
                 $followme_users = $user;
