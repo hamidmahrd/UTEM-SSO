@@ -103,7 +103,7 @@ class ActiveDirectory_model extends CI_Model {
 
     }
 
-    public  function get_followme_users()
+    public function get_followme_users()
     {
         $all_users = $this->get_all();
 
