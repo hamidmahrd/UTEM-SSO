@@ -130,18 +130,27 @@ class Utem_sso extends CI_Controller {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        echo "Connected successfully";
-        exit();
-        foreach ($users as $user)
-        {
+        echo "Connected to freepbx database successfully\r\n";
+
+        foreach ($users as $user) {
             ++$counter;
             $name = $user['displayname'];
             $exten = $user['exten'];
             $mobile = $user['mobile'];
 
             echo "$counter) $exten, $name, $mobile \r\n";
-        }
 
+            $sql = "SELECT grplist FROM findmefollow where grpnum = $exten";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                // output data of each row
+                $row = $result->fetch_assoc();
+                if ($row['grplist']=='')
+                {echo "empty follow me";}
+            }
+
+        }
+        $conn->close();
     }
 
     public function AD_user_full($staff_id)
