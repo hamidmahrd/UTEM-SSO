@@ -149,7 +149,7 @@ class Utem_sso extends CI_Controller {
                 // output data of each row
                 $row = $result->fetch_assoc();
                 echo $row['grplist'];
-
+                echo "\r\n";
 
                 if ($row['grplist']=='') {
                     echo "empty follow me\r\n";
