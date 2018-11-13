@@ -125,7 +125,8 @@ class Utem_sso extends CI_Controller {
         $frpbx_servername = "localhost";
         $frpbx_username = "sso-user";
         $frpbx_password = "UTEMAstios01!";
-        $conn = new mysqli($frpbx_servername, $frpbx_username, $frpbx_password);
+        $frpbx_dname = "asterisk";
+        $conn = new mysqli($frpbx_servername, $frpbx_username, $frpbx_password,$frpbx_dname);
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -140,10 +141,11 @@ class Utem_sso extends CI_Controller {
 
             echo "$counter) $exten, $name, $mobile \r\n";
 
-            $sql = "SELECT grplist FROM findmefollow where `grpnum` = $exten";
+            $sql = "SELECT grplist FROM findmefollow where grpnum = $exten";
             echo $sql;
             $result = $conn->query($sql);
-            printr_exit($result);
+
+
             if ($result->num_rows > 0) {
                 // output data of each row
                 $row = $result->fetch_assoc();
