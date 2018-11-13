@@ -150,8 +150,31 @@ class Utem_sso extends CI_Controller {
                 $row = $result->fetch_assoc();
                 echo $row['grplist'];
                 echo "\r\n";
-                if ($row['grplist']=='')
-                {echo "empty follow me";}
+
+                if ($row['grplist']=='') {
+                    echo "empty follow me\r\n";
+                    $followme_string = $exten . "-" . substr($exten,0,1) . $mobile . "#";
+                    echo  "followme will be like this : $followme_string\r\n";
+
+                    continue;
+                }
+                if ($row['grplist'] == $exten) {
+                    echo "exten but no mobile \r\n";
+                    $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
+                    echo "followme will be like this : $followme_string\r\n";
+
+                    continue;
+                }
+
+                if (strstr($row['grplist'],$mobile)) {
+                    echo "some other exten but no mobile \r\n";
+                    $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
+                    echo "followme will be like this : $followme_string\r\n";
+
+                    continue;
+                }
+
+
             }
 
         }
