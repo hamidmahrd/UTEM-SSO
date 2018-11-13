@@ -109,6 +109,41 @@ class Utem_sso extends CI_Controller {
 
     }
 
+    public function update_followme_from_AD()
+    {
+        $this->load->model('ActiveDirectory_model', 'AD');
+        $users = $this->AD->get_followme_users();
+
+        usort($users, function ($item1, $item2) {
+            if ($item1['exten'] == $item2['exten']) return 0;
+            return $item1['exten'] < $item2['exten'] ? -1 : 1;
+        });
+
+        $list = array();
+        $counter  = 0;
+
+        $frpbx_servername = "localhost";
+        $frpbx_username = "sso-user";
+        $frpbx_password = "UTEMAstios01!";
+        $conn = new mysqli($frpbx_servername, $frpbx_username, $frpbx_password);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        echo "Connected successfully";
+        exit();
+        foreach ($users as $user)
+        {
+            ++$counter;
+            $name = $user['displayname'];
+            $exten = $user['exten'];
+            $mobile = $user['mobile'];
+
+            echo "$counter) $exten, $name, $mobile \r\n";
+        }
+
+    }
+
     public function AD_user_full($staff_id)
     {
         $this->load->model('ActiveDirectory_model','AD');
