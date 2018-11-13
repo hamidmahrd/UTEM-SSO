@@ -157,11 +157,11 @@ class Utem_sso extends CI_Controller {
                     echo  "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
-                   /* if ($conn->query($sql_update) === TRUE) {
-                        echo "Record updated successfully";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "\r\nRecord updated successfully";
                     } else {
-                        echo "Error updating record: " . $conn->error;
-                    }*/
+                        echo "\r\nError updating record: " . $conn->error;
+                    }
 
                     ++$counter;
                     continue;
@@ -173,11 +173,11 @@ class Utem_sso extends CI_Controller {
 
                     $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
                     echo "\r\n $sql_update";
-                    /*if ($conn->query($sql_update) === TRUE) {
-                        echo "Record updated successfully";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "\r\nRecord updated successfully";
                     } else {
-                        echo "Error updating record: " . $conn->error;
-                    }*/
+                        echo "\r\nError updating record: " . $conn->error;
+                    }
 
                     ++$counter;
                     continue;
@@ -190,19 +190,15 @@ class Utem_sso extends CI_Controller {
                     echo "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
-                    /*if ($conn->query($sql_update) === TRUE) {
-                        echo "Record updated successfully";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "\r\nRecord updated successfully";
                     } else {
-                        echo "Error updating record: " . $conn->error;
-                    }*/
+                        echo "\r\nError updating record: " . $conn->error;
+                    }
 
                     ++$counter;
                     continue;
                 }
-
-                if ($counter==20)
-                {echo "20";
-                break ;}
             }
 
         }
