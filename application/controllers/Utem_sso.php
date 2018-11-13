@@ -172,6 +172,7 @@ class Utem_sso extends CI_Controller {
                     echo "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
+                    echo "\r\n $sql_update";
                     /*if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
@@ -200,7 +201,8 @@ class Utem_sso extends CI_Controller {
                 }
 
                 if ($counter==20)
-                {break;}
+                {echo "20";
+                break ;}
             }
 
         }
