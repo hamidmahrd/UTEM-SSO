@@ -157,11 +157,11 @@ class Utem_sso extends CI_Controller {
                     echo  "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
-                    if ($conn->query($sql_update) === TRUE) {
+                   /* if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
                         echo "Error updating record: " . $conn->error;
-                    }
+                    }*/
 
                     ++$counter;
                     continue;
@@ -172,11 +172,11 @@ class Utem_sso extends CI_Controller {
                     echo "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
-                    if ($conn->query($sql_update) === TRUE) {
+                    /*if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
                         echo "Error updating record: " . $conn->error;
-                    }
+                    }*/
 
                     ++$counter;
                     continue;
@@ -189,17 +189,17 @@ class Utem_sso extends CI_Controller {
                     echo "followme will be like this : $followme_string\r\n";
 
                     $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
-                    if ($conn->query($sql_update) === TRUE) {
+                    /*if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
                         echo "Error updating record: " . $conn->error;
-                    }
+                    }*/
 
                     ++$counter;
                     continue;
                 }
 
-                if ($counter==30)
+                if ($counter==20)
                 {break;}
             }
 
