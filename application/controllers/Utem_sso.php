@@ -165,8 +165,9 @@ class Utem_sso extends CI_Controller {
 
                     continue;
                 }
-                echo "subbb" . strstr($row['grplist'],$mobile) . "\r\n";
+
                 if (!strstr($row['grplist'],$mobile)) {
+                    echo "subbb" . strstr($row['grplist'],$mobile) . "\r\n";
                     echo "some other exten but no mobile \r\n";
                     $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
                     echo "followme will be like this : $followme_string\r\n";
