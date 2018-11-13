@@ -134,12 +134,12 @@ class Utem_sso extends CI_Controller {
         echo "Connected to freepbx database successfully\r\n";
 
         foreach ($users as $user) {
-            ++$counter;
+
             $name = $user['displayname'];
             $exten = $user['exten'];
             $mobile = $user['mobile'];
 
-            echo "$counter) $exten, $name, $mobile \r\n";
+            echo "$counter) $exten, $name, $mobile  current followme list:";
 
             $sql = "SELECT grplist FROM findmefollow where grpnum = $exten";
             $result = $conn->query($sql);
@@ -156,6 +156,14 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $exten . "-" . substr($exten,0,1) . $mobile . "#";
                     echo  "followme will be like this : $followme_string\r\n";
 
+                    $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "Record updated successfully";
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    }
+
+                    ++$counter;
                     continue;
                 }
                 if ($row['grplist'] == $exten) {
@@ -163,6 +171,14 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
                     echo "followme will be like this : $followme_string\r\n";
 
+                    $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "Record updated successfully";
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    }
+
+                    ++$counter;
                     continue;
                 }
 
@@ -172,10 +188,18 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
                     echo "followme will be like this : $followme_string\r\n";
 
+                    $sql_update = "UPDATE findmefollow SET grplist=$followme_string WHERE grpnum=$exten";
+                    if ($conn->query($sql_update) === TRUE) {
+                        echo "Record updated successfully";
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    }
+
+                    ++$counter;
                     continue;
                 }
 
-                if ($counter==100)
+                if ($counter==30)
                 {break;}
             }
 
