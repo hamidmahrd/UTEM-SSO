@@ -84,7 +84,7 @@ class Utem_sso extends CI_Controller {
             printr_pre($user);
     }
 
-    public function AD_followme_users()
+    public function AD_followme_users($with_mobile = true)
     {
         $this->load->model('ActiveDirectory_model', 'AD');
         $users = $this->AD->get_followme_users();
@@ -108,6 +108,8 @@ class Utem_sso extends CI_Controller {
         }
 
     }
+
+
 
     public function update_followme_from_AD()
     {
