@@ -234,7 +234,7 @@ class Utem_sso extends CI_Controller {
 
         $this->load->model('ActiveDirectory_model', 'AD');
         $user = $this->AD->get_user($staff_id);
-
+printr_exit($user);
         //set variables
 
 
