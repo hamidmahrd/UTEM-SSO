@@ -175,7 +175,8 @@ class Utem_sso extends CI_Controller {
                     continue;
                 }
 
-
+                if ($counter==100)
+                {break;}
             }
 
         }
