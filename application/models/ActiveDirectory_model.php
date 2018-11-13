@@ -103,13 +103,13 @@ class ActiveDirectory_model extends CI_Model {
 
     }
 
-    public function get_followme_users($with_mobile = true)
+    public function get_followme_users($with_mobile)
     {
         $all_users = $this->get_all();
 
         $followme_users = array();
 
-        if ($with_mobile) {
+        if ($with_mobile == "True") {
             foreach ($all_users as $user) {
                 if ($user['mobile'] != '') {
                     $followme_users[] = $user;
