@@ -87,7 +87,7 @@ class Utem_sso extends CI_Controller {
     public function AD_followme_users($with_mobile = true)
     {
         $this->load->model('ActiveDirectory_model', 'AD');
-        $users = $this->AD->get_followme_users();
+        $users = $this->AD->get_followme_users($with_mobile);
 
         usort($users, function ($item1, $item2) {
             if ($item1['exten'] == $item2['exten']) return 0;
