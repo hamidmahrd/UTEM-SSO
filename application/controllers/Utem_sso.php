@@ -142,13 +142,14 @@ class Utem_sso extends CI_Controller {
             echo "$counter) $exten, $name, $mobile \r\n";
 
             $sql = "SELECT grplist FROM findmefollow where grpnum = $exten";
-            echo $sql;
             $result = $conn->query($sql);
 
 
             if ($result->num_rows > 0) {
                 // output data of each row
                 $row = $result->fetch_assoc();
+                echo $row['grplist'];
+                echo "\r\n";
                 if ($row['grplist']=='')
                 {echo "empty follow me";}
             }
