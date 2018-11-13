@@ -139,7 +139,7 @@ class Utem_sso extends CI_Controller {
             $exten = $user['exten'];
             $mobile = $user['mobile'];
 
-            echo "$counter) $exten, $name, $mobile  current followme list:";
+            echo "\r\n$counter) $exten, $name, $mobile  current followme list:";
 
             $sql = "SELECT grplist FROM findmefollow where grpnum = $exten";
             $result = $conn->query($sql);
@@ -149,7 +149,7 @@ class Utem_sso extends CI_Controller {
                 // output data of each row
                 $row = $result->fetch_assoc();
                 echo $row['grplist'];
-                echo "\r\n";
+
 
                 if ($row['grplist']=='') {
                     echo "empty follow me\r\n";
