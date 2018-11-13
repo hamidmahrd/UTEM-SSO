@@ -156,7 +156,7 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $exten . "-" . substr($exten,0,1) . $mobile . "#";
                     echo  "followme will be like this : $followme_string\r\n";
 
-                    $sql_update = "UPDATE findmefollow SET grplist=\'$followme_string\' WHERE grpnum=$exten";
+                    $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
                    /* if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
@@ -171,7 +171,7 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
                     echo "followme will be like this : $followme_string\r\n";
 
-                    $sql_update = "UPDATE findmefollow SET grplist=\'$followme_string\' WHERE grpnum=$exten";
+                    $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
                     echo "\r\n $sql_update";
                     /*if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
@@ -189,7 +189,7 @@ class Utem_sso extends CI_Controller {
                     $followme_string = $row['grplist'] . "-" . substr($exten,0,1) . $mobile . "#";
                     echo "followme will be like this : $followme_string\r\n";
 
-                    $sql_update = "UPDATE findmefollow SET grplist=\'$followme_string\' WHERE grpnum=$exten";
+                    $sql_update = "UPDATE findmefollow SET grplist='$followme_string' WHERE grpnum=$exten";
                     /*if ($conn->query($sql_update) === TRUE) {
                         echo "Record updated successfully";
                     } else {
