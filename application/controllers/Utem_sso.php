@@ -234,9 +234,31 @@ class Utem_sso extends CI_Controller {
 
         $this->load->model('ActiveDirectory_model', 'AD');
         $user = $this->AD->get_user($staff_id);
-printr_exit($user);
-        //set variables
 
+        //set variables
+        $exten = $user['exten'];
+        $did = $user['telephonenumber'];
+        $camp = $user['camp'];
+        $name = $user['displayname'];
+        $discription = $user['displayname'];
+        $voicemail_email = $user['mail'];
+        $account = $user['samaccountname'];
+        $mobile = $user['mobile'];
+        $department = $user['department'];
+        $secret = "ss$exten-$exten";
+        $trunk_prefix = substr($exten, 0, 1);
+
+        if($mobile == "" ) {
+            $followme_list = $exten;
+        }
+        else
+        {
+            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
+        }
+
+        $followme_post_dest = "\"ext-local,$exten,dest\"";
+        $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
+        printr_pre($user);
 
 //header for Exten csv file.
         $frpbx_exten_header =  FRPBX_EXTEN_HEADER;
@@ -245,6 +267,7 @@ printr_exit($user);
 
         $frpbx_exten_string = $frpbx_exten_header ;
         $frpbx_did_string = $frpbx_did_header;
+
 
 
         $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
