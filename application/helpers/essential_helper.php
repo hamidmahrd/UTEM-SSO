@@ -30,9 +30,11 @@ function lang_name()
 function printr_exit($data) {
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	ini_set("display_errors", 1);
-	echo "<pre>";
+	if(is_cli())
+	    echo "<pre>";
 	print_r($data);
-	echo "</pre>";
+	if (is_cli())
+	    echo "</pre>";
 	exit();
 }
 //-------------------------------------------------------------------------
@@ -43,11 +45,22 @@ function printr_exit($data) {
 function printr_pre($data) {
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	ini_set("display_errors", 1);
-	echo "<pre>";
+	if (is_cli())
+	    echo "<pre>";
 	print_r($data);
-	echo "</pre>";
+	if (is_cli())
+	    echo "</pre>";
 
 }
+
+if ( ! function_exists('is_cli')) {
+    function is_cli()
+    {
+        return php_sapi_name() === 'cli';
+    }
+
+}
+
 
 
 //-----------------------------------------
