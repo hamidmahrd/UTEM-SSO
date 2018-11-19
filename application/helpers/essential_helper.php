@@ -30,10 +30,8 @@ function lang_name()
 function printr_exit($data) {
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	ini_set("display_errors", 1);
-	if(is_cli())
 	    echo "<pre>";
 	print_r($data);
-	if (is_cli())
 	    echo "</pre>";
 	exit();
 }
@@ -45,10 +43,10 @@ function printr_exit($data) {
 function printr_pre($data) {
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	ini_set("display_errors", 1);
-	if (is_cli())
-	    echo "<pre>";
+	 if(!is_cli())
+	     echo "<pre>";
 	print_r($data);
-	if (is_cli())
+	if (!is_cli())
 	    echo "</pre>";
 
 }
