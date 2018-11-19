@@ -56,6 +56,7 @@ function printr_pre($data) {
 if ( ! function_exists('is_cli')) {
     function is_cli()
     {
+        echo php_sapi_name();
         return php_sapi_name() === 'cli';
     }
 
