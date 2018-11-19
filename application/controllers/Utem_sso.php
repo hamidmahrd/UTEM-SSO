@@ -28,9 +28,9 @@ class Utem_sso extends CI_Controller {
         if(is_cli())
         {
             $this->cli->out("[white_bold]UTeM SSO script help :.(".date('Y-m-d H:i:s').").[reset]\n")->new_line();
-            $this->cli->out("[green_bold]- leech : get all ldap users and update against DB.[reset]\n")->new_line();
-            $this->cli->out("[green_bold]- wipedb : [white_bold]wipe all DB users ([red_bold]warning--need to leech data from AD to populate again.)[reset]\n")->new_line();
-            $this->cli->out("[green_bold]- AD_user/stafid : show AD user and equvalent DB user if exist.[reset]\n")->new_line();
+            $this->cli->out("[green_bold]- leech :[white_bold] get all ldap users and update against DB.[reset]\n")->new_line();
+            $this->cli->out("[green_bold]- wipedb :[white_bold] [white_bold]wipe all DB users ([red_bold]warning--need to leech data from AD to populate again.)[reset]\n")->new_line();
+            $this->cli->out("[green_bold]- AD_user/stafid :[white_bold] show AD user and equvalent DB user if exist.[reset]\n")->new_line();
 
         }
     }
