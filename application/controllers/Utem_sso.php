@@ -323,67 +323,52 @@ class Utem_sso extends CI_Controller {
         $this->load->model('ActiveDirectory_model', 'AD');
         $users = $this->AD->get_all_active_users();
 
-        printr_exit(users);
 
-        //set variables
-        $exten = $user['exten'];
-        $did = $user['telephonenumber'];
-        $camp = $user['camp'];
-        $name = $user['displayname'];
-        $discription = $user['displayname'];
-        $voicemail_email = $user['mail'];
-        $account = $user['samaccountname'];
-        $mobile = $user['mobile'];
-        $department = $user['department'];
-        $secret = "ss$exten-$exten";
-        $trunk_prefix = substr($exten, 0, 1);
-
-        if($mobile == "" ) {
-            $followme_list = $exten;
-        }
-        else
-        {
-            $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
-        }
-
-        $followme_post_dest = "\"ext-local,$exten,dest\"";
-        $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
-        printr_pre($user);
-
-//header for Exten csv file.
-        $frpbx_exten_header =  FRPBX_EXTEN_HEADER;
+        //header for Exten csv file.
+        $frpbx_exten_header = FRPBX_EXTEN_HEADER;
 //header for DID csv file.
         $frpbx_did_header = FRPBX_DID_HEADER;
 
-        $frpbx_exten_string = $frpbx_exten_header ;
+        $frpbx_exten_string = $frpbx_exten_header;
         $frpbx_did_string = $frpbx_did_header;
 
+        foreach ($users as  $user) {
+            //set variables
+            $exten = $user['exten'];
+            $did = $user['telephonenumber'];
+            $camp = $user['camp'];
+            $name = $user['displayname'];
+            $discription = $user['displayname'];
+            $voicemail_email = $user['mail'];
+            $account = $user['samaccountname'];
+            $mobile = $user['mobile'];
+            $department = $user['department'];
+            $secret = "ss$exten-$exten";
+            $trunk_prefix = substr($exten, 0, 1);
 
+            if ($mobile == "") {
+                $followme_list = $exten;
+            } else {
+                $followme_list = $exten . "-" . $trunk_prefix . $mobile . "#";
+            }
 
-        $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
-        $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
-        $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
-        $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,,,,,,,";
+            $followme_post_dest = "\"ext-local,$exten,dest\"";
+            $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
+            printr_pre($user);
 
-        $frpbx_did_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
+            if ($exten >= $from_exten and $exten <= $to_exten) {
+                $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
+                $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
+                $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
+                $frpbx_exten_string .= "7,extern,$did,yes,yes,$exten,$voicemail_email,$voicemail_option,yes,yes,,,,,,,";
 
-        //check camp
-        switch ($camp) {
-            case 'main':
-                break;
-            case 'tech':
-                break;
-            case 'city':
-                break;
-            default:
-                echo "unknown camp";
-                return;
-                break;
+                $frpbx_did_string .= ",$did,\"from-did-direct,$exten,1\",$discription,default\n";
+
+            }
         }
-
         $m_date = mdate('%Y%m%d%h%i%a');
-        $frpbx_extens_file = "/var/www/html/utem-sso/tmp/frpbx-exten-$account-$m_date.csv";
-        $frpbx_dids_file = "/var/www/html/utem-sso/tmp/frpbx-did-$account-$m_date.csv";
+        $frpbx_extens_file = "/var/www/html/utem-sso/tmp/frpbx-exten-$from_exten-$to_exten-$m_date.csv";
+        $frpbx_dids_file = "/var/www/html/utem-sso/tmp/frpbx-did-$from_exten-$to_exten-$m_date.csv";
 
 
         if (!write_file($frpbx_extens_file, $frpbx_exten_string)) {
