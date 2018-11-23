@@ -355,9 +355,10 @@ class Utem_sso extends CI_Controller {
 
             $followme_post_dest = "\"ext-local,$exten,dest\"";
             $voicemail_option = "attach=yes|saycid=yes|envelope=yes|delete=no";
-            printr_pre($user);
+
 
             if ($exten >= $from_exten and $exten <= $to_exten) {
+                printr_pre($user);
                 $frpbx_exten_string .= "$exten,$exten,$name,default,0,default,$exten,pjsip,PJSIP/$exten,fixed,$exten,$name,";
                 $frpbx_exten_string .= "$exten,6,$exten,$department,opus&ulaw&alaw&vp8,$name <$exten>,from-internal,all,6,$secret,";
                 $frpbx_exten_string .= "chan_pjsip,ENABLED,ringallv2-prim,20,,$followme_list,$followme_post_dest,,,Ring,";
