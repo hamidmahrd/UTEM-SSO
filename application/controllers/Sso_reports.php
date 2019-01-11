@@ -44,10 +44,17 @@ class Sso_reports extends CI_Controller {
     {
         $this->load->model('ActiveDirectory_model','AD');
         $list = $this->AD->get_all();
+        print_r($list);
+        exit();
 
-        foreach ($list as $staff)
+        $staff_with_exten = 0;
+        $staff_with_mobile = 0;
+
+        foreach ($list as $ad_user)
         {
-            $this->cli->print_staff($staff,array('displayname','exten'));
+            $attributs = array();
+            if ($ad_user)
+            $this->cli->print_staff($ad_user,array('displayname','exten'));
         }
 
     }
