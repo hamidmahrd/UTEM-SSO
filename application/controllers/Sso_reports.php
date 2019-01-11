@@ -32,7 +32,6 @@ class Sso_reports extends CI_Controller {
             $this->cli->out("[white_bold]AD_list_enabled: List all enabled Active Directory Users. [reset]\n")->new_line();
             $this->cli->out("[white_bold]AD_list_disabled: List all disabled Active Directory Users. [reset]\n")->new_line();
             $this->cli->out("[white_bold]AD_list_changed: List all changed Active Directory Users since last sync. [reset]\n")->new_line();
-            
         }
     }
 
