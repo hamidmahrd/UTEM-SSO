@@ -32,13 +32,24 @@ class Sso_reports extends CI_Controller {
             $this->cli->command_help("AD_list_enabled","List all enabled Active Directory Users.");
             $this->cli->command_help("AD_list_disabled","List all disabled Active Directory Users.");
             $this->cli->command_help("AD_list_changed","List all changed Active Directory Users since last sync.");
-            $this->cli->command_help("AD_staff/staffid|extension|mobile","Show Staff info.search by staffid or extension number or mobile number");
-
+            $this->cli->command_help("AD_staff/staffid|extension|mobile","Show Staff info.search by staffid,extension or mobile number.");
         }
         else
         {
             echo "it's not CLI.";
         }
+    }
+
+    public function AD_list_all()
+    {
+        $this->load->model('ActiveDirectory_model','AD');
+        $list = $this->AD->get_all();
+
+        foreach ($list as $staff)
+        {
+            $this->cli->print_staff($staff);
+        }
+
     }
 
 

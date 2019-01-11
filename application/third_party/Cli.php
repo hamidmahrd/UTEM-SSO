@@ -514,4 +514,17 @@ Class Cli
         $this->out("[green_bold]$command: [white]$discription [reset]")->new_line();
     }
 
+
+    public function print_staff($staff, array $attributs)
+    {
+        $staffid = $staff['samaccountname'];
+
+        $this->out("[green_bold]$staffid : [reset]")->new_line();
+
+        foreach ($attributs as $key => $value)
+        {
+            $this->out("    [white_bold] $value: [white] $staff[$value] ")->new_line();
+        }
+    }
+
 }
