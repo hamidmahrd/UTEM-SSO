@@ -44,18 +44,39 @@ class Sso_reports extends CI_Controller {
     {
         $this->load->model('ActiveDirectory_model','AD');
         $list = $this->AD->get_all();
-        print_r($list);
-        exit();
 
+        $staff_with_numuric_id = 0;
         $staff_with_exten = 0;
         $staff_with_mobile = 0;
 
         foreach ($list as $ad_user)
         {
             $attributs = array();
+
+            if (is_numeric($ad_user['samaccountname']))
+            {
+                $staff_with_numuric_id++;
+                $attributs[] = 'samaccountname';
+            }
+            if (is_numeric($ad_user['exten']))
+            {
+                $staff_with_exten++;
+                $attributs[] = 'exten';
+            }
+            if (!is_null($ad_user['mobile']))
+            {
+                $staff_with_mobile++;
+                $attributs[] = 'mobile';
+            }
+
+
             if ($ad_user)
             $this->cli->print_staff($ad_user,array('displayname','exten'));
         }
+        $this->cli->command_help('all AD Users fetched',count($list));
+        $this->cli->command_help("AD users with numeric id",$staff_with_numuric_id);
+        $this->cli->command_help("AD users with extension",$staff_with_numuric_id);
+        $this->cli->command_help("AD users with mobile",$staff_with_numuric_id);
 
     }
 
