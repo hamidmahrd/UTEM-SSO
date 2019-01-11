@@ -35,6 +35,10 @@ class Sso_reports extends CI_Controller {
 
             $this->cli->command_help("AD_list_changed","List all changed Active Directory Users since last sync.");
         }
+        else
+        {
+            echo "it's not CLI.";
+        }
     }
 
 
