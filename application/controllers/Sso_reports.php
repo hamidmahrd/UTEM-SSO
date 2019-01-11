@@ -70,14 +70,30 @@ class Sso_reports extends CI_Controller {
             }
 
 
-            if ($ad_user)
-            $this->cli->print_staff($ad_user,$attributs);
+            if ($ad_user) {
+                if(is_cli()) {
+                    $this->cli->print_staff($ad_user, $attributs);
+                }
+                else
+                {
+                    printr_pre($ad_user);
+                }
+            }
         }
-        $this->cli->command_help('All AD Users fetched',count($list));
-        $this->cli->command_help("AD users with numeric id",$staff_with_numuric_id);
-        $this->cli->command_help("AD users with extension",$staff_with_exten);
-        $this->cli->command_help("AD users with mobile",$staff_with_mobile);
 
+        if(is_cli()) {
+            $this->cli->command_help('All AD Users fetched', count($list));
+            $this->cli->command_help("AD users with numeric id", $staff_with_numuric_id);
+            $this->cli->command_help("AD users with extension", $staff_with_exten);
+            $this->cli->command_help("AD users with mobile", $staff_with_mobile);
+        }
+        else
+        {
+            printr_pre('All AD Users fetched :' . count($list));
+            printr_pre("AD users with numeric id :". $staff_with_numuric_id);
+            printr_pre("AD users with extension :". $staff_with_exten);
+            printr_pre("AD users with mobile :". $staff_with_mobile);
+        }
     }
 
 
