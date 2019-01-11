@@ -63,7 +63,7 @@ class Sso_reports extends CI_Controller {
                 $staff_with_exten++;
                 $attributs[] = 'exten';
             }
-            if (!is_null($ad_user['mobile']))
+            if (is_numeric($ad_user['mobile']))
             {
                 $staff_with_mobile++;
                 $attributs[] = 'mobile';
