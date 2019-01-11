@@ -511,7 +511,7 @@ Class Cli
      */
     public function command_help($command, $discription)
     {
-        $this->out("[green_bold]$command: [white]$discription [reset]\n")->new_line();
+        $this->out("[green_bold]$command: [white]$discription [reset]")->new_line();
     }
 
 }
