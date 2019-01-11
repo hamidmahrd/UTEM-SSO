@@ -27,11 +27,13 @@ class Sso_reports extends CI_Controller {
     {
         if(is_cli())
         {
-            $this->cli->out("\n[green_bold]SSO Reports :[reset]\n")->new_line();
-            $this->cli->out("[green_bold]AD_list_all: [white]List all Active Directory Users. [reset]\n")->new_line();
-            $this->cli->out("[green_bold]AD_list_enabled:[white] List all enabled Active Directory Users. [reset]\n")->new_line();
-            $this->cli->out("[green_bold]AD_list_disabled:[white] List all disabled Active Directory Users. [reset]\n")->new_line();
-            $this->cli->out("[green_bold]AD_list_changed:[white] List all changed Active Directory Users since last sync. [reset]\n")->new_line();
+            $this->cli->clear_screen();
+            $this->cli->out("\n[white_bold]SSO Reports :[reset]\n")->new_line();
+            $this->cli->command_help("AD_list_all","List all Active Directory Users.");
+            $this->cli->command_help("AD_list_enabled","List all enabled Active Directory Users.");
+            $this->cli->command_help("AD_list_disabled","List all disabled Active Directory Users.");
+
+            $this->cli->command_help("AD_list_changed","List all changed Active Directory Users since last sync.");
         }
     }
 

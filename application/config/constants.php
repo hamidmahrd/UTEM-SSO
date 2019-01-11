@@ -104,3 +104,10 @@ defined('FRPBX_DID_HEADER') OR  define('FRPBX_DID_HEADER',"cidnum,extension,dest
 defined('DISABLED_ACCOUNT_CONTROL') OR define('DISABLED_ACCOUNT_CONTROL',serialize (array('514','546','66050','66082','262658','262690','328194','328226')));
 
 defined('CAMPS') OR define('CAMPS',serialize (array('main','tech','city')));
+
+/*
+|--------------------------------------------------------------------------
+| DID Prefixes
+|--------------------------------------------------------------------------
+*/
+defined('DID_Prefix') OR define('DID_Prefix','06270');

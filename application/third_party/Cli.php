@@ -504,4 +504,14 @@ Class Cli
         return $this;
     }
 
+
+    /**
+     * @param $command name of command in cli
+     * @param $discription  the description of command
+     */
+    public function command_help($command, $discription)
+    {
+        $this->out("[green_bold]$command: [white]$discription [reset]\n")->new_line();
+    }
+
 }
