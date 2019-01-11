@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: hamid
- * Date: 12/12/2017
- * Time: 01:39 AM
+ * Date:
+ * Time:
  */
 
 
@@ -150,6 +149,33 @@ class ActiveDirectory_model extends CI_Model {
     {
         $resource = $this->ldap->connect()->getResource();
         $this->ldap->bind();
+        $search_filter = "(sAMAccountName=$staff_id)";
+
+        $result = ldap_search($resource, $this->baseDn, $search_filter, array(), 0, 100, 0);
+        $items = ldap_get_entries($resource, $result);
+//hamid
+        if (empty($items[0])) {
+            echo "empty";
+            return;
+        }
+        $item = $items[0];
+        if (empty($item['samaccounttype'])) {
+            return;
+        }
+        if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
+            return;
+        }
+
+        $ldap_user = $this->user_to_array($item);
+
+        return $ldap_user;
+    }
+
+    public function get_user_by_exten($exten)
+    {
+        $resource = $this->ldap->connect()->getResource();
+        $this->ldap->bind();
+        $ipphone =
         $search_filter = "(sAMAccountName=$staff_id)";
 
         $result = ldap_search($resource, $this->baseDn, $search_filter, array(), 0, 100, 0);

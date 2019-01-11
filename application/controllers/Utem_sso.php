@@ -312,6 +312,8 @@ class Utem_sso extends CI_Controller {
 
     }
 
+
+
     public function frpbx_add_range($from_exten,$to_exten)
     {
         $this->cli->out("[green_bold]- add range :[white_bold] get all ldap users and update frpbx from $from_exten to $to_exten.[reset]\n")->new_line();
