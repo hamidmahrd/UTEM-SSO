@@ -27,7 +27,7 @@ class Sso_reports extends CI_Controller {
     {
         if(is_cli())
         {
-            $this->cli->out("[green_bold]SSO program help :.(".date('Y-m-d H:i:s').").[reset]\n")->new_line();
+            $this->cli->out("\n[green_bold]SSO Reports :[reset]\n")->new_line();
             $this->cli->out("[green_bold]AD_list_all: [white_bold]List all Active Directory Users. [reset]\n")->new_line();
             $this->cli->out("[green_bold]AD_list_enabled:[white_bold] List all enabled Active Directory Users. [reset]\n")->new_line();
             $this->cli->out("[green_bold]AD_list_disabled:[white_bold] List all disabled Active Directory Users. [reset]\n")->new_line();
