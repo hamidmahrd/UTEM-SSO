@@ -52,13 +52,15 @@ class ActiveDirectory_model extends CI_Model {
                 }
 
                 $user = $this->user_to_array($item);
+
                 $ldap_users[$user['samaccountname']] = $user;
             }
             ldap_control_paged_result_response($resource, $result, $cookie);
 
         } while($cookie !== null && $cookie != '');
-
-        return $ldap_users->getArrayCopy();
+        $users = $ldap_users->getArrayCopy();
+        ksort($users,SORT_NATURAL);
+        return $users;
     }
 
     public function get_all_by_attr($keyword)
