@@ -47,7 +47,7 @@ class Sso_reports extends CI_Controller {
 
         foreach ($list as $staff)
         {
-            $this->cli->print_staff($staff);
+            $this->cli->print_staff($staff,array('displayname','exten'));
         }
 
     }
