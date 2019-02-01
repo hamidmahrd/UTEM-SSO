@@ -32,6 +32,7 @@ class Sso_reports extends CI_Controller {
             $this->cli->command_help("AD_list_enabled","List all enabled Active Directory Users.");
             $this->cli->command_help("AD_list_disabled","List all disabled Active Directory Users.");
             $this->cli->command_help("AD_list_changed","List all changed Active Directory Users since last sync.");
+            $this->cli->command_help("AD_list_today","List all Active Directory Users which added or changed today.");
             $this->cli->command_help("AD_staff/staffid|extension|mobile","Show Staff info.search by staffid,extension or mobile number.");
         }
         else
@@ -94,6 +95,18 @@ class Sso_reports extends CI_Controller {
             printr_pre("AD users with extension :". $staff_with_exten);
             printr_pre("AD users with mobile :". $staff_with_mobile);
         }
+    }
+
+    public function AD_list_today()
+    {
+        $this->load->model('ActiveDirectory_model', 'AD');
+        $query = array("whencreated"=>"20090725193121.0Z" );
+
+        $list = $this->AD->get_by_query($query);
+
+        $staff_added_today=0;
+        $staff_changed_today=0;
+        printr_pre($list);
     }
 
 

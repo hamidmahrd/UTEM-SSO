@@ -63,6 +63,53 @@ class ActiveDirectory_model extends CI_Model {
         return $users;
     }
 
+
+    public function get_by_query($query_params)
+    {
+        $resource = $this->ldap->connect()->getResource();
+        $this->ldap->bind();
+        $ldap_users = new \ArrayIterator;
+
+        $i = 0;
+        $cookie = '';
+        $query = "(&(objectClass=user)(objectCategory=person)";
+        foreach ($query_params as $key => $value)
+        {
+            $query .= "($key=$value)";
+        }
+        $query .= ")";
+        do {
+            ldap_control_paged_result($resource, 100, true, $cookie);
+
+
+
+
+            $result = ldap_search($resource, $this->baseDn,$query, array(), 0, 100, 0);
+
+
+            $entries = new \ArrayIterator(ldap_get_entries($resource, $result));
+
+            foreach ($entries as $item) {
+
+                if (empty($item['samaccounttype'])) {
+                    continue;
+                }
+                if ($item['samaccounttype'][0] != "805306368") {    //samacounttypeof user account
+                    continue;
+                }
+
+                $user = $this->user_to_array($item);
+
+                $ldap_users[$user['samaccountname']] = $user;
+            }
+            ldap_control_paged_result_response($resource, $result, $cookie);
+
+        } while($cookie !== null && $cookie != '');
+        $users = $ldap_users->getArrayCopy();
+        ksort($users,SORT_NATURAL);
+        return $users;
+    }
+
     public function get_all_by_attr($keyword)
     {
         $resource = $this->ldap->connect()->getResource();
@@ -103,6 +150,8 @@ class ActiveDirectory_model extends CI_Model {
     {
 
     }
+
+
 
     public function get_followme_users($with_mobile)
     {
