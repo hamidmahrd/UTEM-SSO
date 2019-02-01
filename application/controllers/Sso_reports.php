@@ -100,7 +100,7 @@ class Sso_reports extends CI_Controller {
     public function AD_list_today()
     {
         $this->load->model('ActiveDirectory_model', 'AD');
-        $query = array("whencreated"=>"20090725193121.0Z" );
+        $query = array("whenchanged"=>"20190201*" );
 
         $list = $this->AD->get_by_query($query);
 
