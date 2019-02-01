@@ -78,6 +78,7 @@ class ActiveDirectory_model extends CI_Model {
             $query .= "($key=$value)";
         }
         $query .= ")";
+        printr_pre($query);
         do {
             ldap_control_paged_result($resource, 100, true, $cookie);
 
